@@ -2,8 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
-const request = require('./util/request')
-const packageJSON = require('./package.json')
+const request = require('../util/request')
+const packageJSON = require('../package.json')
 const exec = require('child_process').exec
 const cache = require('apicache').middleware
 
@@ -60,10 +60,10 @@ const special = {
   'personal_fm.js': '/personal_fm'
 }
 
-fs.readdirSync(path.join(__dirname, 'module')).reverse().forEach(file => {
+fs.readdirSync(path.join(__dirname, '../module')).reverse().forEach(file => {
   if(!file.endsWith('.js')) return
   let route = (file in special) ? special[file] : '/' + file.replace(/\.js$/i, '').replace(/_/g, '/')
-  let question = require(path.join(__dirname, 'module', file))
+  let question = require(path.join(__dirname, '../module', file))
 
   app.use(route, (req, res) => {
     let query = Object.assign({}, req.query, req.body, {cookie: req.cookies})
